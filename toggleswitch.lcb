@@ -2,7 +2,7 @@
 -- Mimics an iOS-style pill toggle: pink track, white thumb
 -- Property: toggled (Boolean) — readable/settable from LiveCode Script
 
-widget com.example.toggleswitch
+widget org.openxtalk.toggleswitch
 
 use com.livecode.canvas
 use com.livecode.widget

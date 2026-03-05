@@ -1,9 +1,127 @@
-Library: 
+Name: Toggle Switch
 
-Type: 
+Type: widget
 
-author: Emily-Elizabeth Howard
+Syntax: org.openxtalk.toggleswitch
 
-version: 1.2.0
+Summary: An iOS-style pill toggle switch widget with a pink track and white thumb.
+
+Edition: Community
+
+Description:
+The Toggle Switch widget renders a pill-shaped toggle control that mimics the
+iOS UISwitch appearance. The track interpolates between grey (off) and
+pink/magenta (on). The white circular thumb slides between left (off) and
+right (on) when the user clicks the widget.
+
+The widget posts a <message>toggled</message> message to its script object
+whenever the user changes the state.
+
+References: toggled (property), hilite (property), toggled (message)
+
+Tags: widget, toggle, switch, control, button
 
 
+
+Name: toggled
+
+Type: property
+
+Syntax: set the toggled of <widget> to {true | false}
+Syntax: get the toggled of <widget>
+
+Summary: Gets or sets the on/off state of the Toggle Switch widget.
+
+Value (bool): True if the switch is in the ON (right) position, false if OFF (left).
+
+Description:
+Use the <toggled> property to read or programmatically set the state of the
+Toggle Switch widget. Setting this property updates the visual appearance
+immediately and does NOT fire the <toggled> message (only user interaction
+fires the message).
+
+Examples:
+-- Turn the switch on
+set the toggled of widget "MyToggle" to true
+
+-- Turn the switch off
+set the toggled of widget "MyToggle" to false
+
+-- Read the current state
+if the toggled of widget "MyToggle" then
+   answer "The switch is on."
+end if
+
+References: hilite (property), toggled (message)
+
+Tags: widget, toggle, property
+
+
+
+Name: hilite
+
+Type: property
+
+Syntax: set the hilite of <widget> to {true | false}
+Syntax: get the hilite of <widget>
+
+Summary: Alias for the toggled property, following LiveCode button conventions.
+
+Value (bool): True if the switch is ON, false if OFF.
+
+Description:
+The <hilite> property is a convenience alias for <toggled>. It exists so that
+code written for standard LiveCode button controls (which use <hilite> to track
+checked/pressed state) can drive this widget without modification.
+
+Setting <hilite> is identical to setting <toggled>; both update the visual
+state immediately without firing a message.
+
+Examples:
+-- Works exactly like: set the toggled of widget "MyToggle" to true
+set the hilite of widget "MyToggle" to true
+
+References: toggled (property)
+
+Tags: widget, toggle, property
+
+
+
+Name: toggled
+
+Type: message
+
+Syntax: toggled <pIsOn>
+
+Summary: Sent to the widget's script object when the user clicks the switch.
+
+Parameters:
+pIsOn (bool): The new state of the switch — true for ON, false for OFF.
+
+Description:
+The <toggled> message is posted to the widget's script object (typically the
+card or stack script, or a behavior attached to the widget) whenever the user
+clicks the widget and the state changes. The single parameter <pIsOn> carries
+the new boolean state.
+
+This message is only fired by user interaction. Setting the <toggled> or
+<hilite> property programmatically does NOT send this message.
+
+Examples:
+-- Handle the toggle in a card script
+on toggled pIsOn
+   if pIsOn then
+      show group "ExtraOptions"
+   else
+      hide group "ExtraOptions"
+   end if
+end toggled
+
+-- Store the preference
+on toggled pIsOn
+   set the cDarkMode of this stack to pIsOn
+end toggled
+
+References: toggled (property), hilite (property)
+
+Tags: widget, toggle, message

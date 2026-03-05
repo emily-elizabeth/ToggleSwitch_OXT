@@ -1,5 +1,5 @@
 <package version="0.0">
-  <name>com.example.toggleswitch</name>
+  <name>org.openxtalk.toggleswitch</name>
   <title>Toggle Switch</title>
   <author>Emily-Elizabeth Howard</author>
   <version>1.2.0</version>
