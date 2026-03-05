@@ -1,0 +1,23 @@
+<package version="0.0">
+  <name>com.example.toggleswitch</name>
+  <title>Toggle Switch</title>
+  <author>Claude</author>
+  <version>1.2.0</version>
+  <license>community</license>
+  <type>widget</type>
+  <requires name="com.livecode.canvas"/>
+  <requires name="com.livecode.array"/>
+  <requires name="com.livecode.list"/>
+  <requires name="com.livecode.widget"/>
+  <requires name="com.livecode.arithmetic"/>
+  <requires name="com.livecode.logic"/>
+  <requires name="com.livecode.engine"/>
+  <metadata key="preferredSize">80,40</metadata>
+  <handler name="OnCreate" parameters="" return="any"/>
+  <handler name="OnSave" parameters="out array" return="any"/>
+  <handler name="OnLoad" parameters="in array" return="any"/>
+  <handler name="OnPaint" parameters="" return="any"/>
+  <handler name="OnMouseUp" parameters="" return="any"/>
+  <property name="toggled" get="boolean" set="boolean"/>
+  <property name="hilite" get="boolean" set="boolean"/>
+</package>
