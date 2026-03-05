@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 40">
+  <!-- Track (pill shape, pink = ON state) -->
+  <rect x="2" y="2" width="76" height="36" rx="18" ry="18" fill="#FC4C99"/>
+  <!-- Thumb (white circle, right = ON) -->
+  <circle cx="58" cy="20" r="14" fill="white"/>
+</svg>

@@ -13,6 +13,7 @@ metadata title         is "Toggle Switch"
 metadata author        is "Emily-Elizabeth Howard"
 metadata version       is "1.2.0"
 metadata preferredSize is "80,40"
+metadata svgicon       is "M2,20 a18,18 0 0 1 18,-18 h40 a18,18 0 0 1 0,36 h-40 a18,18 0 0 1 -18,-18 z M44,20 m-14,0 a14,14 0 1 0 28,0 a14,14 0 1 0 -28,0"
 
 -- The on/off state
 private variable mToggled as Boolean
