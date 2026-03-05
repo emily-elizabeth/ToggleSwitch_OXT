@@ -10,7 +10,7 @@ use com.livecode.engine
 use com.livecode.math
 
 metadata title         is "Toggle Switch"
-metadata author        is "Claude"
+metadata author        is "Emily-Elizabeth Howard"
 metadata version       is "1.2.0"
 metadata preferredSize is "80,40"
 
