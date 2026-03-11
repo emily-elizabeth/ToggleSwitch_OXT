@@ -2,14 +2,18 @@
   <name>org.openxtalk.toggleswitch</name>
   <title>Toggle Switch</title>
   <author>Emily-Elizabeth Howard</author>
-  <version>1.2.0</version>
+  <version>1.3.0</version>
   <license>community</license>
   <type>widget</type>
   <requires name="com.livecode.canvas"/>
   <requires name="com.livecode.array"/>
   <requires name="com.livecode.list"/>
-  <requires name="com.livecode.widget"/>
+  <requires name="com.livecode.mathfoundation"/>
   <requires name="com.livecode.arithmetic"/>
+  <requires name="com.livecode.binary"/>
+  <requires name="com.livecode.string"/>
+  <requires name="com.livecode.typeconvert"/>
+  <requires name="com.livecode.widget"/>
   <requires name="com.livecode.logic"/>
   <requires name="com.livecode.engine"/>
   <metadata key="preferredSize">80,40</metadata>
@@ -21,4 +25,5 @@
   <handler name="OnMouseUp" parameters="" return="any"/>
   <property name="toggled" get="boolean" set="boolean"/>
   <property name="hilite" get="boolean" set="boolean"/>
+  <property name="onColor" get="string" set="string"/>
 </package>

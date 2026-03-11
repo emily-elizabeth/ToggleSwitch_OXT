@@ -4,20 +4,20 @@ Type: widget
 
 Syntax: org.openxtalk.toggleswitch
 
-Summary: An iOS-style pill toggle switch widget with a pink track and white thumb.
+Summary: An iOS-style pill toggle switch widget with a configurable ON colour and white thumb.
 
 Edition: Community
 
 Description:
 The Toggle Switch widget renders a pill-shaped toggle control that mimics the
-iOS UISwitch appearance. The track interpolates between grey (off) and
-pink/magenta (on). The white circular thumb slides between left (off) and
-right (on) when the user clicks the widget.
+iOS UISwitch appearance. The track interpolates between neutral grey (off) and
+a user-configurable colour (on, defaulting to pink #FC4C99). The white circular
+thumb slides between left (off) and right (on) when the user clicks the widget.
 
 The widget posts a <message>toggled</message> message to its script object
 whenever the user changes the state.
 
-References: toggled (property), hilite (property), toggled (message)
+References: toggled (property), hilite (property), onColor (property), toggled (message)
 
 Tags: widget, toggle, switch, control, button
 
@@ -37,8 +37,8 @@ Value (bool): True if the switch is in the ON (right) position, false if OFF (le
 Description:
 Use the <toggled> property to read or programmatically set the state of the
 Toggle Switch widget. Setting this property updates the visual appearance
-immediately and does NOT fire the <toggled> message (only user interaction
-fires the message).
+immediately and does NOT fire the <toggled> message — only user interaction
+fires the message.
 
 Examples:
 -- Turn the switch on
@@ -52,7 +52,7 @@ if the toggled of widget "MyToggle" then
    answer "The switch is on."
 end if
 
-References: hilite (property), toggled (message)
+References: hilite (property), onColor (property), toggled (message)
 
 Tags: widget, toggle, property
 
@@ -65,7 +65,7 @@ Type: property
 Syntax: set the hilite of <widget> to {true | false}
 Syntax: get the hilite of <widget>
 
-Summary: Alias for the toggled property, following LiveCode button conventions.
+Summary: Alias for the toggled property, following standard LiveCode button conventions.
 
 Value (bool): True if the switch is ON, false if OFF.
 
@@ -78,8 +78,50 @@ Setting <hilite> is identical to setting <toggled>; both update the visual
 state immediately without firing a message.
 
 Examples:
--- Works exactly like: set the toggled of widget "MyToggle" to true
+-- Equivalent to: set the toggled of widget "MyToggle" to true
 set the hilite of widget "MyToggle" to true
+
+References: toggled (property)
+
+Tags: widget, toggle, property
+
+
+
+Name: onColor
+
+Type: property
+
+Syntax: set the onColor of <widget> to <colorString>
+Syntax: get the onColor of <widget>
+
+Summary: Gets or sets the track colour displayed when the switch is in the ON state.
+
+Value (string): A comma-separated RGB color string in the 0–255 range,
+for example "252,76,153" (the default pink).
+
+Description:
+Use the <onColor> property to customise the track colour shown when the switch
+is ON. The value uses the standard LiveCode comma-separated RGB color string
+format. The OFF state always displays a neutral grey regardless of this setting.
+
+Setting this property updates the widget immediately and the colour is persisted
+when the stack is saved.
+
+Examples:
+-- Blue
+set the onColor of widget "MyToggle" to "0,122,255"
+
+-- Green
+set the onColor of widget "MyToggle" to "52,199,89"
+
+-- Orange
+set the onColor of widget "MyToggle" to "255,149,0"
+
+-- Restore the default pink
+set the onColor of widget "MyToggle" to "252,76,153"
+
+-- Read the current colour
+put the onColor of widget "MyToggle" into tCurrentColor
 
 References: toggled (property)
 
@@ -101,11 +143,11 @@ pIsOn (bool): The new state of the switch — true for ON, false for OFF.
 Description:
 The <toggled> message is posted to the widget's script object (typically the
 card or stack script, or a behavior attached to the widget) whenever the user
-clicks the widget and the state changes. The single parameter <pIsOn> carries
-the new boolean state.
+clicks the widget and changes its state. The parameter <pIsOn> carries the
+new boolean state.
 
-This message is only fired by user interaction. Setting the <toggled> or
-<hilite> property programmatically does NOT send this message.
+This message is only fired by user interaction. Setting the <toggled>, <hilite>,
+or <onColor> property programmatically does NOT send this message.
 
 Examples:
 -- Handle the toggle in a card script
@@ -117,7 +159,7 @@ on toggled pIsOn
    end if
 end toggled
 
--- Store the preference
+-- Save a preference
 on toggled pIsOn
    set the cDarkMode of this stack to pIsOn
 end toggled

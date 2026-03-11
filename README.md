@@ -79,10 +79,11 @@ end toggled
 
 ## Properties
 
-| Property  | Type    | Default | Description                          |
-|-----------|---------|---------|--------------------------------------|
-| `toggled` | Boolean | `false` | The on/off state of the switch       |
-| `hilite`  | Boolean | `false` | Alias for `toggled` (LCS convention) |
+| Property  | Type    | Default       | Description                          |
+|-----------|---------|---------------|--------------------------------------|
+| `toggled` | Boolean | `false`       | The on/off state of the switch       |
+| `hilite`  | Boolean | `false`       | Alias for `toggled` (LCS convention) |
+| `onColor` | String  | `"252,76,153"`| The track colour when ON             |
 
 ---
 
@@ -104,16 +105,24 @@ The widget scales gracefully to any size. The default preferred size is **80 × 
 
 ## Customisation
 
-To change the ON colour, edit the interpolation constants in `OnPaint()`:
+To change the ON colour, set the `onColor` property from your LiveCode script using a standard comma-separated RGB or RGBA color string:
 
-```livecode
--- Change [0.988, 0.298, 0.600] to any RGB triple (0.0–1.0 range)
-put 0.780 + mAnimProgress * (0.988 - 0.780) into tR
-put 0.780 + mAnimProgress * (0.298 - 0.780) into tG
-put 0.800 + mAnimProgress * (0.600 - 0.800) into tB
+```livescript
+-- Blue
+set the onColor of widget "MyToggle" to "0,122,255"
+
+-- Green
+set the onColor of widget "MyToggle" to "52,199,89"
+
+-- Default pink
+set the onColor of widget "MyToggle" to "252,76,153"
 ```
 
-The first value in each line is the OFF (grey) component; the second bracketed value is the ON (pink) component.
+You can also read the current colour:
+
+```livescript
+get the onColor of widget "MyToggle"  -- returns e.g. "252,76,153"
+```
 
 ---
 

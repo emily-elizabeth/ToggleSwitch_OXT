@@ -11,7 +11,7 @@ use com.livecode.math
 
 metadata title         is "Toggle Switch"
 metadata author        is "Emily-Elizabeth Howard"
-metadata version       is "1.2.0"
+metadata version       is "1.3.0"
 metadata preferredSize is "80,40"
 metadata svgicon       is "M2,20 a18,18 0 0 1 18,-18 h40 a18,18 0 0 1 0,36 h-40 a18,18 0 0 1 -18,-18 z M44,20 m-14,0 a14,14 0 1 0 28,0 a14,14 0 1 0 -28,0"
 
@@ -21,6 +21,9 @@ private variable mToggled as Boolean
 -- 0.0 = OFF (thumb left), 1.0 = ON (thumb right)
 private variable mAnimProgress as Real
 
+-- ON track colour (default: pink #FC4C99)
+private variable mOnColor as Color
+
 --------------------------------------------------------------------------------
 -- Lifecycle
 --------------------------------------------------------------------------------
@@ -28,10 +31,18 @@ private variable mAnimProgress as Real
 public handler OnCreate()
    put false into mToggled
    put 0.0    into mAnimProgress
+   put color [0.988, 0.298, 0.600] into mOnColor   -- default pink #FC4C99
 end handler
 
 public handler OnSave(out rProperties as Array)
    put mToggled into rProperties["toggled"]
+   variable tR as Number
+   variable tG as Number
+   variable tB as Number
+   put the floor of (the red   of mOnColor * 255) into tR
+   put the floor of (the green of mOnColor * 255) into tG
+   put the floor of (the blue  of mOnColor * 255) into tB
+   put tR & "," & tG & "," & tB into rProperties["onColor"]
 end handler
 
 public handler OnLoad(in pProperties as Array)
@@ -42,6 +53,17 @@ public handler OnLoad(in pProperties as Array)
       else
          put 0.0 into mAnimProgress
       end if
+   end if
+   if "onColor" is among the keys of pProperties then
+      variable tParts as List
+      variable tR as Number
+      variable tG as Number
+      variable tB as Number
+      split pProperties["onColor"] by "," into tParts
+      put tParts[1] parsed as number into tR
+      put tParts[2] parsed as number into tG
+      put tParts[3] parsed as number into tB
+      put color [tR / 255, tG / 255, tB / 255] into mOnColor
    end if
 end handler
 
@@ -55,13 +77,13 @@ public handler OnPaint()
    put my width  into tWidth
    put my height into tHeight
 
-   -- Interpolate track colour: grey [0.78,0.78,0.80] -> pink [0.988,0.298,0.60]
+   -- Interpolate track colour: grey [0.78,0.78,0.80] -> user-defined ON colour
    variable tR as Real
    variable tG as Real
    variable tB as Real
-   put 0.780 + mAnimProgress * (0.988 - 0.780) into tR
-   put 0.780 + mAnimProgress * (0.298 - 0.780) into tG
-   put 0.800 + mAnimProgress * (0.600 - 0.800) into tB
+   put 0.780 + mAnimProgress * (the red   of mOnColor - 0.780) into tR
+   put 0.780 + mAnimProgress * (the green of mOnColor - 0.780) into tG
+   put 0.800 + mAnimProgress * (the blue  of mOnColor - 0.800) into tB
 
    -- Track: pill shape
    variable tPad    as Real
@@ -120,6 +142,7 @@ end handler
 
 property toggled  get getToggled  set setToggled
 property hilite   get getToggled  set setToggled
+property onColor  get getOnColor  set setOnColor
 
 private handler getToggled() returns Boolean
    return mToggled
@@ -132,6 +155,30 @@ private handler setToggled(in pValue as Boolean)
    else
       put 0.0 into mAnimProgress
    end if
+   redraw all
+end handler
+
+-- onColor accepts a LiveCode color string e.g. "255,0,0"
+private handler getOnColor() returns String
+   variable tR as Number
+   variable tG as Number
+   variable tB as Number
+   put the floor of (the red   of mOnColor * 255) into tR
+   put the floor of (the green of mOnColor * 255) into tG
+   put the floor of (the blue  of mOnColor * 255) into tB
+   return tR & "," & tG & "," & tB
+end handler
+
+private handler setOnColor(in pValue as String)
+   variable tParts as List
+   variable tR as Number
+   variable tG as Number
+   variable tB as Number
+   split pValue by "," into tParts
+   put tParts[1] parsed as number into tR
+   put tParts[2] parsed as number into tG
+   put tParts[3] parsed as number into tB
+   put color [tR / 255, tG / 255, tB / 255] into mOnColor
    redraw all
 end handler
 
